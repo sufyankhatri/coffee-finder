@@ -1,5 +1,3 @@
-import { Image } from '@chakra-ui/image';
-import { Badge, Box } from '@chakra-ui/layout';
 import React, { Fragment } from 'react';
 import { Place } from '../types';
 import PlaceItem from './PlaceItem';
@@ -33,7 +31,7 @@ const PlacesList: React.FC<PlacesListProps> = ({ places }) => {
 
         return (
           <Fragment key={index}>
-            {!item.hours.open_now && (
+            {item.hours.open_now && (
               <PlaceItem
                 photoUrl={photoUrl}
                 priceRange={priceRange}

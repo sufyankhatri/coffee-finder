@@ -13,7 +13,7 @@ const PlaceItem: React.FC<placeItemProps> = ({
   priceRange,
 }) => {
   return (
-    <Box maxW="xl" borderWidth="1px" borderRadius="lg" overflow="hidden">
+    <Box maxW="xl" borderWidth="1px" borderRadius="lg" overflow="hidden" bg="	#F8F8F8">
       <Image src={photoUrl} height="300px" width="100%" />
       <Box p="6">
         <Box display="flex" alignItems="baseline">

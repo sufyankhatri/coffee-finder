@@ -1,10 +1,9 @@
-import { Image } from '@chakra-ui/image';
-import { Badge, Box, Container, Heading } from '@chakra-ui/layout';
-import { Select } from '@chakra-ui/select';
+import { Box, Container, Heading, SimpleGrid, Stack } from '@chakra-ui/layout';
+import { Radio, RadioGroup } from '@chakra-ui/radio';
 import { Spinner } from '@chakra-ui/spinner';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getPlaces } from '../api/apiRequest';
-import { Errors, Place } from '../types';
+import { Place } from '../types';
 import PlacesList from './PlacesList';
 
 const getCurrentUserLocation = (): Promise<string | any> => {
@@ -49,7 +48,7 @@ const GetPlaces: React.FC = () => {
       const places = await getPlaces(latLong, sortingMethod);
       setPlaces(places);
     } catch (error) {
-      console.error(error);
+      handleError(error);
     } finally {
       setLoading(false);
     }
@@ -84,34 +83,34 @@ const GetPlaces: React.FC = () => {
     );
   }
   return (
-    <div>
+    <Box>
       <>
-        <Container maxW="xl">
-          <Heading as="h6" size="md">
-            Please select sorting method
-          </Heading>
-          <Select
-            // placeholder="Select option"
-            onChange={(e) => {
-              setSortingMethod(e.target.value);
-            }}
-            defaultValue={'DISTANCE'}
+        <Container paddingTop="10" centerContent>
+          <RadioGroup
+            onChange={(v) => setSortingMethod(v)}
+            value={sortingMethod}
           >
-            <option value="DISTANCE">Distance</option>
-            <option value="RATING">Rating</option>
-          </Select>
-          {places.length > 0 ? (
-            <PlacesList places={places} />
-          ) : (
-            <Container maxW="xl" centerContent>
-              <Heading as="h6" size="md" color="red">
-                No data to show
-              </Heading>
-            </Container>
-          )}
+            <Stack direction="row">
+              <Radio value="DISTANCE">Distance</Radio>
+              <Radio value="RATING">Rating</Radio>
+            </Stack>
+          </RadioGroup>
+        </Container>
+        <Container maxW="container.lg" marginTop="10" width="100%">
+          <SimpleGrid columns={[1, 2]} spacing="40px">
+            {places.length > 0 ? (
+              <PlacesList places={places} />
+            ) : (
+              <Container maxW="xl" centerContent>
+                <Heading as="h6" size="md" color="red">
+                  No data to show
+                </Heading>
+              </Container>
+            )}
+          </SimpleGrid>
         </Container>
       </>
-    </div>
+    </Box>
   );
 };
 
